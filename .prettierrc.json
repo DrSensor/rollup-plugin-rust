@@ -1,0 +1,27 @@
+{
+	"overrides": [
+		{
+			"excludeFiles": "*.config.js",
+			"files": "*.js",
+			"options": {
+				"singleQuote": true,
+				"bracketSpacing": true
+			}
+		},
+		{
+			"files": ["*.json", ".*rc", ".*.json"],
+			"options": {
+				"parser": "json",
+				"useTabs": true
+			}
+		},
+		{
+			"files": "*.config.js",
+			"options": {
+				"useTabs": true,
+				"bracketSpacing": false,
+				"semi": false
+			}
+		}
+	]
+}
