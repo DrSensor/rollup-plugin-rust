@@ -1,0 +1,5 @@
+[lints]
+all=warn
+
+[libs]
+flow-typed

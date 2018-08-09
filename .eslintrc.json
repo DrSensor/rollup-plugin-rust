@@ -1,8 +1,13 @@
 {
 	"root": true,
 	"parser": "babel-eslint",
-	"plugins": ["import", "promise", "node", "prettier", "babel"],
-	"extends": ["eslint:recommended", "plugin:prettier/recommended"],
+	"plugins": ["import", "promise", "node", "prettier", "babel", "flowtype"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:prettier/recommended",
+		"plugin:flowtype/recommended",
+		"prettier/flowtype"
+	],
 	"env": {
 		"node": true,
 		"es6": true

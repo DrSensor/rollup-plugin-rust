@@ -4,9 +4,9 @@
 	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "rollup -c",
-		"dev": "rollup -c -w",
-		"lint": "eslint --cache src test",
+		"build": "flow && rollup -c",
+		"dev": "flow && rollup -c -w",
+		"lint": "flow && eslint --cache src test",
 		"lint:fix": "eslint --fix src test",
 		"lint:commits": "commitlint --to=$(git rev-parse HEAD)",
 		"release": "standard-version --skip.commit --skip.tag",
@@ -14,13 +14,18 @@
 		"release:ok": "standard-version --sign --commit-all --skip.bump --skip.changelog",
 		"release:validate": "commitlint --from=$(git describe --tags --abbrev=0) --to=$(git rev-parse HEAD)",
 		"ci:release": "conventional-github-releaser -p angular",
-		"ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}"
+		"ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
+		"postinstall": "flow-typed install --ignoreDeps dev"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rollup-plugin-rust.git"
 	},
-	"keywords": ["rollup-plugin", "rust", "webassembly"],
+	"keywords": [
+		"rollup-plugin",
+		"rust",
+		"webassembly"
+	],
 	"author": "Fahmi Akbar Wildana",
 	"license": "MIT",
 	"bugs": {
@@ -30,6 +35,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.0.0-beta.56",
 		"@babel/preset-env": "^7.0.0-beta.56",
+		"@babel/preset-flow": "^7.0.0-rc.0",
 		"@commitlint/cli": "^7.0.0",
 		"@commitlint/config-conventional": "^7.0.1",
 		"babel-eslint": "^8.2.6",
@@ -37,10 +43,13 @@
 		"eslint": "^5.3.0",
 		"eslint-config-prettier": "^2.9.0",
 		"eslint-plugin-babel": "^5.1.0",
+		"eslint-plugin-flowtype": "^2.50.0",
 		"eslint-plugin-import": "^2.13.0",
 		"eslint-plugin-node": "^7.0.1",
 		"eslint-plugin-prettier": "^2.6.2",
 		"eslint-plugin-promise": "^3.8.0",
+		"flow-bin": "^0.78.0",
+		"flow-typed": "^2.5.1",
 		"husky": "^1.0.0-rc.13",
 		"lint-staged": "^7.2.0",
 		"prettier": "^1.14.2",
@@ -52,7 +61,11 @@
 		"standard-version": "^4.4.0"
 	},
 	"lint-staged": {
-		"*.js": ["pretty-quick --staged", "eslint src test"]
+		"*.js": [
+			"pretty-quick --staged",
+			"flow focus-check",
+			"eslint"
+		]
 	},
 	"standard-version": {
 		"scripts": {

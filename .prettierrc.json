@@ -4,6 +4,7 @@
 			"excludeFiles": "*.config.js",
 			"files": "*.js",
 			"options": {
+				"parser": "flow",
 				"singleQuote": true,
 				"bracketSpacing": true
 			}

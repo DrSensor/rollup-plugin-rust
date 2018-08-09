@@ -5,6 +5,7 @@
 				"node": 6
 			},
 			"modules": false
-		}]
+		}],
+		"@babel/flow"
 	]
 }
