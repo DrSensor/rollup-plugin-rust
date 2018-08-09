@@ -3,6 +3,15 @@
 	"version": "0.0.0",
 	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
 	"main": "dist/index.js",
+	"scripts": {
+		"lint:commits": "commitlint --to=$(git rev-parse HEAD)",
+		"release": "standard-version --skip.commit --skip.tag",
+		"release:as": "standard-version --skip.commit --skip.tag --release-as",
+		"release:ok": "standard-version --sign --commit-all --skip.bump --skip.changelog",
+		"release:validate": "commitlint --from=$(git describe --tags --abbrev=0) --to=$(git rev-parse HEAD)",
+		"ci:release": "conventional-github-releaser -p angular",
+		"ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rollup-plugin-rust.git"
@@ -17,5 +26,25 @@
 	"bugs": {
 		"url": "https://github.com/DrSensor/rollup-plugin-rust/issues"
 	},
-	"homepage": "https://github.com/DrSensor/rollup-plugin-rust#readme"
+	"homepage": "https://github.com/DrSensor/rollup-plugin-rust#readme",
+	"devDependencies": {
+		"@commitlint/cli": "^7.0.0",
+		"@commitlint/config-conventional": "^7.0.1",
+		"conventional-github-releaser": "^3.1.2",
+		"husky": "^1.0.0-rc.13",
+		"lint-staged": "^7.2.0",
+		"standard-version": "^4.4.0"
+	},
+	"lint-staged": {
+		"*.js": [
+			"auto correct code-style",
+			"check code-style violation"
+		]
+	},
+	"standard-version": {
+		"scripts": {
+			"postbump": "auto correct code-style for package.json and lock file",
+			"precommit": "git add CHANGELOG.md package*.json"
+		}
+	}
 }
