@@ -1,0 +1,21 @@
+{
+	"name": "rollup-plugin-rust",
+	"version": "0.0.0",
+	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
+	"main": "dist/index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DrSensor/rollup-plugin-rust.git"
+	},
+	"keywords": [
+		"rollup-plugin",
+		"rust",
+		"webassembly"
+	],
+	"author": "Fahmi Akbar Wildana",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/DrSensor/rollup-plugin-rust/issues"
+	},
+	"homepage": "https://github.com/DrSensor/rollup-plugin-rust#readme"
+}
