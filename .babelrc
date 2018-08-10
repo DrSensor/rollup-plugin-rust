@@ -7,5 +7,10 @@
 			"modules": false
 		}],
 		"@babel/flow"
-	]
+	],
+	"env": {
+		"test": {
+			"presets": ["@babel/env", "@babel/flow"]
+		}
+	}
 }

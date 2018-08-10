@@ -1,16 +1,26 @@
 {
 	"root": true,
 	"parser": "babel-eslint",
-	"plugins": ["import", "promise", "node", "prettier", "babel", "flowtype"],
+	"plugins": [
+		"import",
+		"promise",
+		"node",
+		"prettier",
+		"babel",
+		"flowtype",
+		"jest"
+	],
 	"extends": [
 		"eslint:recommended",
 		"plugin:prettier/recommended",
 		"plugin:flowtype/recommended",
-		"prettier/flowtype"
+		"prettier/flowtype",
+		"plugin:jest/recommended"
 	],
 	"env": {
 		"node": true,
-		"es6": true
+		"es6": true,
+		"jest/globals": true
 	},
 	"rules": {
 		"no-console": "off"

@@ -2,9 +2,8 @@
 
 const pi = (s: number) => s * 3.14;
 
-export default function() {
+export default function(n: number) {
   const a = { sd: pi(2) };
-  while (process.env.NODE) {
-    console.log('hello world!!', a);
-  }
+  console.log('hello world!!', a);
+  return a.sd + n;
 }
