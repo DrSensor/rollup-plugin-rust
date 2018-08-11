@@ -1,7 +1,11 @@
 .NOTE.md
 
+# Rust
+*.lock
+**/target/
+
 # flow
-flow-typed/
+flow-typed/npm
 
 # build result
 dist/

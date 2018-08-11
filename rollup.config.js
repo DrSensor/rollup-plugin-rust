@@ -1,6 +1,7 @@
 import pkg from "./package.json"
 import prc from "./.prettierrc.json"
 
+import resolve from "rollup-plugin-node-resolve"
 import {eslint} from "rollup-plugin-eslint"
 import babel from "rollup-plugin-babel"
 import prettier from "rollup-plugin-prettier"
@@ -26,6 +27,11 @@ export default [
 			file: pkg.main,
 			format: "es"
 		},
-		plugins: [eslint(), babel(), prettier(prettierrc.files("*.js"))]
+		plugins: [
+			eslint(),
+			resolve(),
+			babel(),
+			prettier(prettierrc.files("*.js"))
+		]
 	}
 ]

@@ -1,5 +1,9 @@
 [lints]
 all=warn
 
+[ignore]
+<PROJECT_ROOT>/dist/.*
+<PROJECT_ROOT>/out/.*
+
 [libs]
 flow-typed
