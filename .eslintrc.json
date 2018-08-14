@@ -24,5 +24,8 @@
 	},
 	"rules": {
 		"no-console": "off"
+	},
+	"globals": {
+		"WebAssembly": true
 	}
 }

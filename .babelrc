@@ -8,6 +8,9 @@
 		}],
 		"@babel/flow"
 	],
+	"plugins": [
+		"@babel/plugin-proposal-export-namespace-from"
+	],
 	"env": {
 		"test": {
 			"presets": ["@babel/env", "@babel/flow"]
