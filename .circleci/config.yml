@@ -81,10 +81,10 @@ jobs:
           name: Submit coverage data to codecov.
           command: bash <(curl -s https://codecov.io/bash)
           when: on_success
-  node6-latest:
-    docker:
-      - image: circleci/node:6
-    <<: *unit_tests
+  # node6-latest:
+  #   docker:
+  #     - image: circleci/node:6
+  #   <<: *unit_tests
   node10-latest:
     docker:
       - image: circleci/node:10
@@ -149,23 +149,23 @@ workflows:
 #endregion
 
 #region CROSS-BUILD
-      - node6-latest:
-          requires:
-            - dependency_cache
-          filters:
-            tags:
-              only: /.*/
+      # - node6-latest:
+      #     requires:
+      #       - dependency_cache
+      #     filters:
+      #       tags:
+      #         only: /.*/
       - node8-latest:
           requires:
             - analysis
-            - node6-latest
+            # - node6-latest
           filters:
             tags:
               only: /.*/
       - node10-latest:
           requires:
             - analysis
-            - node6-latest
+            # - node6-latest
           filters:
             tags:
               only: /.*/
