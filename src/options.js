@@ -1,7 +1,7 @@
 // @flow
 /** Default options */
 export default ({
-  target: 'wasm32-unknown-uknown',
+  target: 'wasm32-unknown-unknown',
   release: true,
   export: 'promise',
   include: ['**/*.rs'],

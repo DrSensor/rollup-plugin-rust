@@ -17,9 +17,11 @@ describe('test export option', () => {
     // Usage
     const module = new WebAssembly.Module(wasmCode);
     const instance = new WebAssembly.Instance(module);
+    const { add } = instance.exports;
 
     expect(wasmCode).toBeInstanceOf(Buffer);
-    expect(instance.exports).toMatchObject({});
+    // $FlowFixMe: false alarm
+    expect(add(1, 2)).toBe(3);
   });
 
   test('export as WebAssembly.Module', async () => {
@@ -32,9 +34,11 @@ describe('test export option', () => {
 
     // Usage
     const instance = new WebAssembly.Instance(wasmModule);
+    const { add } = instance.exports;
 
     expect(wasmModule).toBeInstanceOf(WebAssembly.Module);
-    expect(instance.exports).toMatchObject({});
+    // $FlowFixMe: false alarm
+    expect(add(1, 2)).toBe(3);
   });
 
   test('export as WebAssembly.Instance', async () => {
@@ -46,7 +50,7 @@ describe('test export option', () => {
     const wasmInstance = await require(bundle);
 
     expect(wasmInstance).toBeInstanceOf(WebAssembly.Instance);
-    expect(wasmInstance.exports).toMatchObject({}); // can be used directly, not suitable for big size wasm
+    expect(wasmInstance.exports.add(1, 2)).toBe(3); // can be used directly, not suitable for big size wasm
   });
 
   test('export of WebAssembly.instantiate', async () => {
@@ -59,9 +63,10 @@ describe('test export option', () => {
 
     // Usage
     const { module, instance } = await compileWasm;
+    const { add } = instance.exports;
 
     expect(module).toBeInstanceOf(WebAssembly.Module);
     expect(instance).toBeInstanceOf(WebAssembly.Instance);
-    expect(instance.exports).toMatchObject({});
+    expect(add(1, 2)).toBe(3);
   });
 });

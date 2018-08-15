@@ -24,4 +24,13 @@ describe('negative test', () => {
 
     await expect(tryToRollup).rejects.toBeInstanceOf(Error);
   });
+
+  test('wrong target compilation', async () => {
+    const tryToRollup = rollup({
+      input: 'test/fixtures/single_function/index.js',
+      plugins: [rust({ target: 'x86_64-pc-windows-msvc' })]
+    });
+
+    await expect(tryToRollup).rejects.toBeInstanceOf(Error);
+  });
 });
