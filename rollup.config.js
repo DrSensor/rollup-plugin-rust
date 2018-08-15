@@ -1,6 +1,8 @@
+import {dirname} from "path"
 import pkg from "./package.json"
 import prc from "./.prettierrc.json"
 
+import commonjs from "rollup-plugin-commonjs"
 import resolve from "rollup-plugin-node-resolve"
 import autoExternal from "rollup-plugin-auto-external"
 import {eslint} from "rollup-plugin-eslint"
@@ -23,16 +25,21 @@ const prettierrc = {
 // Rollup Configuration
 export default [
 	{
-		input: "src/main.js",
-		output: {
-			file: pkg.main,
-			format: "es"
+		input: {
+			index: "src/main.js",
+			cargo: "node_modules/rust-native-wasm-loader/dist/cargo.js"
 		},
+		output: {
+			dir: dirname(pkg.main),
+			format: "esm"
+		},
+		experimentalCodeSplitting: true,
 		plugins: [
 			eslint(),
 			resolve(),
-			autoExternal(),
 			babel(),
+			commonjs(),
+			autoExternal(),
 			prettier(prettierrc.files("*.js"))
 		]
 	}
