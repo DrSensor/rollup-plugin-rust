@@ -1,15 +1,12 @@
 {
 	"presets": [
 		["@babel/env", {
-			"targets": {
-				"node": 6
-			},
+			"targets": {"node": 8},
 			"modules": false
-		}],
-		"@babel/flow"
+		}], "@babel/flow"
 	],
 	"plugins": [
-		"@babel/plugin-proposal-export-namespace-from"
+		"@babel/proposal-export-namespace-from"
 	],
 	"env": {
 		"test": {

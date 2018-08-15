@@ -4,7 +4,7 @@
 	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "flow && rollup -c || true",
+		"build": "flow && rollup -c",
 		"dev": "flow && rollup -c -w || true",
 		"lint": "flow && eslint --cache src test flow-typed/*.js || true",
 		"lint:fix": "eslint --fix src test flow-typed/*.js || true",
@@ -69,6 +69,7 @@
 		"rollup": "^0.64.1",
 		"rollup-plugin-auto-external": "^2.0.0",
 		"rollup-plugin-babel": "^4.0.0-beta.8",
+		"rollup-plugin-commonjs": "^9.1.5",
 		"rollup-plugin-eslint": "^5.0.0",
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-prettier": "^0.4.0",
