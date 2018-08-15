@@ -42,7 +42,10 @@ export default function(options: $Shape<Options> = {}) {
           case 'promise':
             return wrap(wasmCode).promiseWebAssembly;
         }
-      }
+      } else
+        this.error(`only support wasm related target compile
+        for more info see https://kripken.github.io/blog/binaryen/2018/04/18/rust-emscripten.html
+      `);
     }
   };
 }
