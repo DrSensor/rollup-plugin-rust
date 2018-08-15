@@ -1,8 +1,18 @@
+rustup_nightly: &rustup_nightly
+  run:
+    name: Install Cargo and Rust compiler
+    command: |
+      echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> $BASH_ENV
+      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+      source $BASH_ENV
+      rustup target add wasm32-unknown-unknown --toolchain nightly
+
 unit_tests: &unit_tests
   steps:
     - checkout
     - restore_cache:
         key: dependency-cache-{{ checksum "package-lock.json" }}
+    - <<: *rustup_nightly
     - run:
         name: NPM Rebuild
         command: npm install --quiet
@@ -71,12 +81,14 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
+      - <<: *rustup_nightly
       - run:
           name: NPM Rebuild
           command: npm install --quiet
       - run:
           name: Run unit tests.
-          command: npm run ci:coverage
+          command: |
+            npm run ci:coverage
       - run:
           name: Submit coverage data to codecov.
           command: bash <(curl -s https://codecov.io/bash)
