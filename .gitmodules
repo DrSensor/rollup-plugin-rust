@@ -1,0 +1,4 @@
+[submodule "stencil"]
+	path = examples/stencil
+	url = git@github.com:DrSensor/example-stencil-rust.git
+	branch = smoke-test

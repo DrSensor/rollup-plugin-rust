@@ -31,7 +31,8 @@ export default [
 		},
 		output: {
 			dir: dirname(pkg.main),
-			format: "esm"
+			format: "cjs",
+			exports: "named"
 		},
 		experimentalCodeSplitting: true,
 		plugins: [
