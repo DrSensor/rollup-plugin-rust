@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
 	"main": "dist/index.js",
+	"typings": "index.d.ts",
 	"scripts": {
 		"build": "flow && rollup -c",
 		"dev": "flow && rollup -c -w || true",
