@@ -7,6 +7,31 @@ rustup_nightly: &rustup_nightly
       source $BASH_ENV
       rustup target add wasm32-unknown-unknown --toolchain nightly
 
+smoke_tests: &smoke_tests
+  steps:
+    - checkout
+    - run: git submodule sync
+    - run: git submodule update --init
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+    - <<: *rustup_nightly
+    - run:
+        name: NPM Rebuild
+        command: npm install --quiet
+    - run:
+        name: Build & Bundle project
+        command: npm run build
+    - run:
+        name: NPM Rebuild smoke-test
+        command: |
+          cd examples/${GIT_SUBMODULE}
+          npm install
+    - run:
+        name: Run smoke tests
+        command: |
+          cd examples/${GIT_SUBMODULE}
+          npm run build
+
 unit_tests: &unit_tests
   steps:
     - checkout
@@ -107,6 +132,15 @@ jobs:
     <<: *canary_tests
 #endregion
 
+#region TEST BY EXAMPLES
+  smoke-stencil:
+    docker:
+      - image: circleci/node:8
+    environment:
+      - GIT_SUBMODULE: stencil
+    <<: *smoke_tests
+#endregion
+
 #region RELEASE VERSION
   draft:
     docker:
@@ -195,12 +229,21 @@ workflows:
       #           - /rc.*/
 #endregion
 
-#region RELEASE VERSION
-      - draft:
+#region TEST BY EXAMPLES
+      - smoke-stencil:
           requires:
             - node8-latest
             # - node8-canary
             - node10-latest
+          filters:
+            tags:
+              only: /.*/
+#endregion
+
+#region RELEASE VERSION
+      - draft:
+          requires:
+            - smoke-stencil
           filters:
             tags:
               only: /^v\d+[.]\d+[.]\d+$/
