@@ -52,7 +52,7 @@ export default [{
 <summary>quick usage</summary>
 
 <b>lib.rs</b>
-```rs
+```rust
 #[no_mangle]
 pub fn add(a: i32, b: i32) -> i32 {
     a + b
@@ -181,7 +181,7 @@ See the test cases and example projects in [fixtures](./test/fixtures) and [exam
 ### Given this Rust code
 
 <b>lib.rs</b>
-```rs
+```rust
 #[no_mangle]
 pub fn add(a: i32, b: i32) -> i32 {
     a + b
