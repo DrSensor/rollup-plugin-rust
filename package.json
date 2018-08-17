@@ -10,9 +10,9 @@
 		"lint": "flow && eslint --cache src test flow-typed/*.js || true",
 		"lint:fix": "eslint --fix src test flow-typed/*.js || true",
 		"lint:commits": "commitlint --to=$(git rev-parse HEAD) || true",
-		"release": "standard-version --skip.commit --skip.tag || true",
-		"release:as": "standard-version --skip.commit --skip.tag --release-as || true",
-		"release:ok": "standard-version --sign --commit-all --skip.bump --skip.changelog || true",
+		"release": "standard-version --skip.commit --skip.tag",
+		"release:as": "standard-version --skip.commit --skip.tag --release-as",
+		"release:ok": "standard-version --sign --commit-all --skip.bump --skip.changelog",
 		"release:validate": "commitlint --from=$(git describe --tags --abbrev=0) --to=$(git rev-parse HEAD) || true",
 		"ci:lint": "flow && eslint --cache src test flow-typed/*.js",
 		"ci:test": "jest --runInBand --silent --ci",
@@ -25,6 +25,9 @@
 		"prepare": "flow-typed install jest && flow-typed install --ignoreDeps dev && npm run lint:fix"
 	},
 	"files": ["dist/"],
+	"engines": {
+		"node": ">= 8.9.0"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rollup-plugin-rust.git"
