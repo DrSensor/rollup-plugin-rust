@@ -1,6 +1,6 @@
 {
 	"name": "rollup-plugin-rust",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
 	"main": "dist/index.js",
 	"typings": "index.d.ts",
