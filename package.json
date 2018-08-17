@@ -23,7 +23,7 @@
 		"test:watch": "jest --watch || true",
 		"test:coverage": "jest --collectCoverageFrom='src/**/*.js' --coverage || true",
 		"prepare": "flow-typed install jest && flow-typed install --ignoreDeps dev && npm run lint:fix",
-		"prepublish": "npm run build"
+		"prepublishOnly": "npm run build"
 	},
 	"files": ["dist/"],
 	"engines": {
