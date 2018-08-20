@@ -14,7 +14,7 @@
 [![size][size]][size-url]
 
 # rollup-plugin-rust
-<sup><sup>tl;dr -- see [examples](#Examples)</sup></sup>
+<sup><sup>tl;dr -- see [examples](#examples)</sup></sup>
 
 This is a rollup plugin that loads Rust code so it can be interop with Javascript base project. Currently, the Rust code will be compiled as:
 - [x] WebAssembly module/instance
