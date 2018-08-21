@@ -25,7 +25,9 @@
 		"prepare": "flow-typed install jest && flow-typed install --ignoreDeps dev && npm run lint:fix",
 		"prepublishOnly": "npm run build"
 	},
-	"files": ["dist/"],
+	"files": [
+		"dist/"
+	],
 	"engines": {
 		"node": ">= 8.9.0"
 	},
@@ -33,16 +35,17 @@
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rollup-plugin-rust.git"
 	},
-	"keywords": ["rollup-plugin", "rust", "webassembly"],
+	"keywords": [
+		"rollup-plugin",
+		"rust",
+		"webassembly"
+	],
 	"author": "Fahmi Akbar Wildana",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/DrSensor/rollup-plugin-rust/issues"
 	},
 	"homepage": "https://github.com/DrSensor/rollup-plugin-rust#readme",
-	"peerDependencies": {
-		"rollup": "0.64.0 - 1.0.0"
-	},
 	"devDependencies": {
 		"@babel/core": "^7.0.0-rc.1",
 		"@babel/plugin-proposal-export-namespace-from": "^7.0.0-rc.1",
@@ -54,21 +57,21 @@
 		"babel-eslint": "^8.2.6",
 		"babel-jest": "^23.4.2",
 		"conventional-github-releaser": "^3.1.2",
-		"eslint": "^5.3.0",
-		"eslint-config-prettier": "^2.9.0",
+		"eslint": "^5.4.0",
+		"eslint-config-prettier": "^3.0.1",
 		"eslint-plugin-babel": "^5.1.0",
 		"eslint-plugin-flowtype": "^2.50.0",
-		"eslint-plugin-import": "^2.13.0",
-		"eslint-plugin-jest": "^21.20.2",
+		"eslint-plugin-import": "^2.14.0",
+		"eslint-plugin-jest": "^21.21.0",
 		"eslint-plugin-node": "^7.0.1",
 		"eslint-plugin-prettier": "^2.6.2",
-		"eslint-plugin-promise": "^3.8.0",
-		"flow-bin": "^0.78.0",
+		"eslint-plugin-promise": "^4.0.0",
+		"flow-bin": "^0.79.1",
 		"flow-typed": "^2.5.1",
 		"husky": "^1.0.0-rc.13",
 		"jest": "^23.5.0",
 		"jest-runner-eslint": "^0.6.0",
-		"lint-staged": "^7.2.0",
+		"lint-staged": "^7.2.2",
 		"prettier": "^1.14.2",
 		"pretty-quick": "^1.6.0",
 		"rollup": "^0.64.1",
@@ -82,7 +85,11 @@
 		"standard-version": "^4.4.0"
 	},
 	"lint-staged": {
-		"*.js": ["pretty-quick --staged", "flow focus-check", "eslint"]
+		"*.js": [
+			"pretty-quick --staged",
+			"flow focus-check",
+			"eslint"
+		]
 	},
 	"standard-version": {
 		"scripts": {
