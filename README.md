@@ -8,13 +8,14 @@
 </div>
 
 [![npm][npm]][npm-url]
+[![npm][npm-download]][npm-url]
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
 [![tests][tests]][tests-url]
 [![size][size]][size-url]
 
 # rollup-plugin-rust
-<sup><sup>tl;dr -- see [examples](#Examples)</sup></sup>
+<sup><sup>tl;dr -- see [examples](#examples)</sup></sup>
 
 This is a rollup plugin that loads Rust code so it can be interop with Javascript base project. Currently, the Rust code will be compiled as:
 - [x] WebAssembly module/instance
@@ -85,7 +86,7 @@ And run `rollup` via your preferred method.
   - `instance` will export wasm code as [WebAssembly.Instance][]
   - `promise` will [instantiate][WebAssembly.instantiate] wasm code asynchronously
 
-How wasm code would be exported. (see [examples](#Examples))
+How wasm code would be exported. (see [examples](#examples))
 
 ```js
 // in your rollup.config.js
@@ -265,6 +266,7 @@ wasmInstantiate.then(({ instance, module }) => {
 
 [npm]: https://img.shields.io/npm/v/rollup-plugin-rust.svg
 [npm-url]: https://npmjs.com/package/rollup-plugin-rust
+[npm-download]: https://img.shields.io/npm/dm/rollup-plugin-rust.svg
 
 [node]: https://img.shields.io/node/v/rollup-plugin-rust.svg
 [node-url]: https://nodejs.org
