@@ -1,4 +1,9 @@
 [submodule "stencil"]
 	path = examples/stencil
-	url = git@github.com:DrSensor/example-stencil-rust.git
+	url = ../example-stencil-rust.git
+	branch = smoke-test
+
+[submodule "node_wasm"]
+	path = examples/node_wasm
+	url = ../example-node-rust-wasm.git
 	branch = smoke-test
