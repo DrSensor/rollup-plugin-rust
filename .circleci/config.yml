@@ -139,6 +139,12 @@ jobs:
     environment:
       - GIT_SUBMODULE: stencil
     <<: *smoke_tests
+  smoke-node-wasm:
+    docker:
+      - image: circleci/node:8
+    environment:
+      - GIT_SUBMODULE: node_wasm
+    <<: *smoke_tests
 #endregion
 
 #region RELEASE VERSION
@@ -230,11 +236,15 @@ workflows:
 #endregion
 
 #region TEST BY EXAMPLES
-      - smoke-stencil:
+      # - smoke-stencil:
+      #     requires:
+      #       - node8-latest
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      - smoke-node-wasm:
           requires:
             - node8-latest
-            # - node8-canary
-            - node10-latest
           filters:
             tags:
               only: /.*/
@@ -243,7 +253,8 @@ workflows:
 #region RELEASE VERSION
       - draft:
           requires:
-            - smoke-stencil
+            # - smoke-stencil
+            - smoke-node-wasm
           filters:
             tags:
               only: /^v\d+[.]\d+[.]\d+$/

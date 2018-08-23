@@ -1,0 +1,16 @@
+language: rust
+rust:
+  - nightly
+
+before_install:
+  - nvm install 8
+  - nvm use 8
+before_script:
+  - rustup target add wasm32-unknown-unknown
+  - npm install
+  - npm run build
+script:
+  - echo "START SMOKE TEST FOR STENCIL"
+  - cd examples/stencil
+  - npm install
+  - npm run build
