@@ -52,21 +52,4 @@ describe('test export option', () => {
     expect(wasmInstance).toBeInstanceOf(WebAssembly.Instance);
     expect(wasmInstance.exports.add(1, 2)).toBe(3); // can be used directly, not suitable for big size wasm
   });
-
-  test('export of WebAssembly.instantiate', async () => {
-    const bundle = await rollup({
-      input,
-      plugins: [rust({ export: 'promise' })]
-    });
-
-    const compileWasm = await require(bundle);
-
-    // Usage
-    const { module, instance } = await compileWasm;
-    const { add } = instance.exports;
-
-    expect(module).toBeInstanceOf(WebAssembly.Module);
-    expect(instance).toBeInstanceOf(WebAssembly.Instance);
-    expect(add(1, 2)).toBe(3);
-  });
 });
