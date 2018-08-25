@@ -39,8 +39,12 @@ export default function(options: $Shape<Options> = {}) {
             return wrap(wasmCode).asWebAssembly.Instance;
           case 'module':
             return wrap(wasmCode).asWebAssembly.Module;
-          case 'promise':
-            return wrap(wasmCode).promiseWebAssembly;
+          case 'promise' || 'async':
+            return wrap(wasmCode).promiseWebAssembly.Both;
+          case 'async-instance':
+            return wrap(wasmCode).promiseWebAssembly.Instance;
+          case 'async-module':
+            return wrap(wasmCode).promiseWebAssembly.Module;
         }
       } else
         this.error(`only support wasm related target compile
