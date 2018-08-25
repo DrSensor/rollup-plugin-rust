@@ -6,3 +6,6 @@ authors = ["Fahmi Akbar Wildana <fahmi.a.w@gmail.com>"]
 [lib]
 crate-type = ["cdylib"]
 path = "lib.rs"
+
+[profile.release]
+lto = true
