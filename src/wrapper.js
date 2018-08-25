@@ -15,20 +15,33 @@ export default function(buffer: Buffer) {
       Module:
         polyfill +
         `export default new WebAssembly.Module(
-        Buffer.from([${data}])
-      )`,
+          Buffer.from([${data}])
+        )`,
       Instance:
         polyfill +
         `export default new WebAssembly.Instance(
-        new WebAssembly.Module(
-          Buffer.from([${data}])
-        )
-      )`
+          new WebAssembly.Module(
+            Buffer.from([${data}])
+          )
+        )`
     },
-    promiseWebAssembly:
-      polyfill +
-      `export default WebAssembly.instantiate(
-      Buffer.from([${data}])
-    )`
+    promiseWebAssembly: {
+      Module:
+        polyfill +
+        `module.exports = () => WebAssembly.compile(
+          Buffer.from([${data}])
+        )`,
+      Instance:
+        polyfill +
+        `module.exports = importObject => WebAssembly.instantiate(
+          new WebAssembly.Module(Buffer.from([${data}])),
+          importObject
+        )`,
+      Both:
+        polyfill +
+        `module.exports = importObject => WebAssembly.instantiate(
+            Buffer.from([${data}]), importObject
+        )`
+    }
   };
 }
