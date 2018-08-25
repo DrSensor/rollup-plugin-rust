@@ -8,11 +8,13 @@
 </div>
 
 [![npm][npm]][npm-url]
-[![npm][npm-download]][npm-url]
 [![node][node]][node-url]
+[![size][size]][size-url]
+[![npm][npm-download]][npm-url]
 [![deps][deps]][deps-url]
 [![tests][tests]][tests-url]
-[![size][size]][size-url]
+[![cover][cover]][cover-url]
+[![stencil][stencil]][stencil-url]
 
 # rollup-plugin-rust
 <sup><sup>tl;dr -- see [examples](#examples)</sup></sup>
@@ -84,7 +86,9 @@ And run `rollup` via your preferred method.
   - `buffer` will export wasm code as [Buffer][]
   - `module` will export wasm code as [WebAssembly.Module][]
   - `instance` will export wasm code as [WebAssembly.Instance][]
-  - `promise` will [instantiate][WebAssembly.instantiate] wasm code asynchronously
+  - `async` will [instantiate][WebAssembly.instantiate] wasm code asynchronously, return promise of both [WebAssembly.Module][] and [WebAssembly.Instance][]
+  - `async-module` will [compile][WebAssembly.compile] wasm code asynchronously, return promise of [WebAssembly.Module][]
+  - `async-instance` will [instantiate][WebAssembly.instantiate] wasm code asynchronously, return promise of [WebAssembly.Instance][]
 
 How wasm code would be exported. (see [examples](#examples))
 
@@ -228,13 +232,48 @@ import wasm from './lib.rs'
 console(wasm.exports.add(1, 2)); // 3
 ```
 ---
-#### `{export: 'promise'}`
+#### `{export: 'async'}`
+```rust
+extern {
+    fn hook(c: i32);
+}
+
+#[no_mangle]
+pub fn add(a: i32, b: i32) -> i32 {
+    hook(a + b)
+}
+```
+
 ```js
 import wasmInstantiate from './lib.rs'
 
-wasmInstantiate.then(({ instance, module }) => {
+wasmInstantiate(importObject | undefined).then(({ instance, module }) => {
   console(instance.exports.add(1, 2)); // 3
-  // create different instance
+
+  // create different instance, extra will be called in different environment
+  const differentInstance = new WebAssembly.Instance(module, {
+    env: {
+      hook: result => result * 2
+    }
+  });
+  console(differentInstance.exports.add(1, 2)); // 6
+})
+```
+---
+#### `{export: 'async-instance'}`
+```js
+import wasmInstantiate from './lib.rs'
+
+wasmInstantiate(importObject | undefined).then(instance => {
+  console(instance.exports.add(1, 2)); // 3
+})
+```
+---
+#### `{export: 'async-module'}`
+```js
+import wasmInstantiate from './lib.rs'
+
+wasmCompile(importObject | undefined).then(module => {
   const differentInstance = new WebAssembly.Instance(module);
   console(differentInstance.exports.add(1, 2)); // 3
 })
@@ -263,6 +302,7 @@ wasmInstantiate.then(({ instance, module }) => {
 [WebAssembly.Module]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module
 [WebAssembly.Instance]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance
 [WebAssembly.instantiate]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
+[WebAssembly.compile]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile
 
 [npm]: https://img.shields.io/npm/v/rollup-plugin-rust.svg
 [npm-url]: https://npmjs.com/package/rollup-plugin-rust
@@ -276,6 +316,9 @@ wasmInstantiate.then(({ instance, module }) => {
 
 [tests]: https://img.shields.io/circleci/project/github/DrSensor/rollup-plugin-rust.svg
 [tests-url]: https://circleci.com/gh/DrSensor/rollup-plugin-rust
+
+[stencil]: https://img.shields.io/travis/DrSensor/rollup-plugin-rust.svg?label=smoke%20stencil
+[stencil-url]: https://travis-ci.org/DrSensor/rollup-plugin-rust
 
 [cover]: https://codecov.io/gh/DrSensor/rollup-plugin-rust/branch/master/graph/badge.svg
 [cover-url]: https://codecov.io/gh/DrSensor/rollup-plugin-rust
