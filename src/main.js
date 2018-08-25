@@ -19,6 +19,17 @@ export default function(options: $Shape<Options> = {}) {
 
   return {
     name: 'rust',
+    options(opts: any) {
+      let external: string[] | ((id: string) => boolean);
+
+      if (typeof opts.external === 'function')
+        external = id => opts.external(id) || id.includes('buffer');
+
+      if (Array.isArray(opts.external))
+        external = Array.from(new Set(opts.external.concat('buffer')));
+
+      return Object.assign({}, opts, { external });
+    },
     async transform(code: string, id: string) {
       if (!extension.test(id)) return;
       if (!filter(id)) return;
@@ -39,7 +50,7 @@ export default function(options: $Shape<Options> = {}) {
             return wrap(wasmCode).asWebAssembly.Instance;
           case 'module':
             return wrap(wasmCode).asWebAssembly.Module;
-          case 'promise' || 'async':
+          case 'async':
             return wrap(wasmCode).promiseWebAssembly.Both;
           case 'async-instance':
             return wrap(wasmCode).promiseWebAssembly.Instance;
