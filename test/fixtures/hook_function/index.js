@@ -1,1 +1,1 @@
-export * from './lib.rs';
+export { default } from './lib.rs';

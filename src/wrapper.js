@@ -28,18 +28,18 @@ export default function(buffer: Buffer) {
     promiseWebAssembly: {
       Module:
         polyfill +
-        `module.exports = () => WebAssembly.compile(
+        `export default () => WebAssembly.compile(
           Buffer.from([${data}])
         )`,
       Instance:
         polyfill +
-        `module.exports = importObject => WebAssembly.instantiate(
+        `export default importObject => WebAssembly.instantiate(
           new WebAssembly.Module(Buffer.from([${data}])),
           importObject
         )`,
       Both:
         polyfill +
-        `module.exports = importObject => WebAssembly.instantiate(
+        `export default importObject => WebAssembly.instantiate(
             Buffer.from([${data}]), importObject
         )`
     }
