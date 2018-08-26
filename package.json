@@ -1,6 +1,6 @@
 {
 	"name": "rollup-plugin-rust",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"description": "A rollup plugin that that compile Rust code into WebAssembly modules",
 	"main": "dist/index.js",
 	"typings": "index.d.ts",
@@ -25,9 +25,7 @@
 		"prepare": "flow-typed install jest && flow-typed install --ignoreDeps dev && npm run lint:fix",
 		"prepublishOnly": "npm run build"
 	},
-	"files": [
-		"dist/"
-	],
+	"files": ["dist/"],
 	"engines": {
 		"node": ">= 8.9.0"
 	},
@@ -35,11 +33,7 @@
 		"type": "git",
 		"url": "git+https://github.com/DrSensor/rollup-plugin-rust.git"
 	},
-	"keywords": [
-		"rollup-plugin",
-		"rust",
-		"webassembly"
-	],
+	"keywords": ["rollup-plugin", "rust", "webassembly"],
 	"author": "Fahmi Akbar Wildana",
 	"license": "MIT",
 	"bugs": {
@@ -85,11 +79,7 @@
 		"standard-version": "^4.4.0"
 	},
 	"lint-staged": {
-		"*.js": [
-			"pretty-quick --staged",
-			"flow focus-check",
-			"eslint"
-		]
+		"*.js": ["pretty-quick --staged", "flow focus-check", "eslint"]
 	},
 	"standard-version": {
 		"scripts": {
