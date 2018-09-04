@@ -1,3 +1,5 @@
+version: 2
+
 rustup_nightly: &rustup_nightly
   run:
     name: Install Cargo and Rust compiler
@@ -60,9 +62,8 @@ canary_tests: &canary_tests
         name: Run unit tests.
         command: if [[ $(compver --name rollup --gte next --lt latest) < 1 ]] ; then printf "Next is older than Latest - Skipping Canary Suite"; else npm run ci:test ; fi
 
-version: 2
 jobs:
-#region PREPARATION
+  #region PREPARATION
   dependency_cache:
     docker:
       - image: circleci/node:latest
@@ -95,10 +96,13 @@ jobs:
           command: npm audit --quiet
       - run:
           name: Validate Commit Messages
-          command: npm run ci:lint:commits
-#endregion
+          command: |
+            if [[ -z $CIRCLE_TAG ]]; then
+              npm run ci:lint:commits
+            fi
+  #endregion
 
-#region CROSS-BUILD
+  #region CROSS-BUILD
   node8-latest:
     docker:
       - image: circleci/node:8
@@ -130,9 +134,9 @@ jobs:
     docker:
       - image: circleci/node:8
     <<: *canary_tests
-#endregion
+  #endregion
 
-#region TEST BY EXAMPLES
+  #region TEST BY EXAMPLES
   smoke-stencil:
     docker:
       - image: circleci/node:8
@@ -145,9 +149,9 @@ jobs:
     environment:
       - GIT_SUBMODULE: node_wasm
     <<: *smoke_tests
-#endregion
+  #endregion
 
-#region RELEASE VERSION
+  #region RELEASE VERSION
   draft:
     docker:
       - image: circleci/node:latest
@@ -182,12 +186,10 @@ jobs:
           command: npm publish --verbose
 #endregion
 
-version: 2.0
 workflows:
-  version: 2
   build and publish on tagging:
     jobs:
-#region PREPARATION
+      #region PREPARATION
       - dependency_cache:
           filters:
             tags:
@@ -198,9 +200,9 @@ workflows:
           filters:
             tags:
               only: /.*/
-#endregion
+      #endregion
 
-#region CROSS-BUILD
+      #region CROSS-BUILD
       # - node6-latest:
       #     requires:
       #       - dependency_cache
@@ -233,9 +235,9 @@ workflows:
       #         only:
       #           - master
       #           - /rc.*/
-#endregion
+      #endregion
 
-#region TEST BY EXAMPLES
+      #region TEST BY EXAMPLES
       # - smoke-stencil:
       #     requires:
       #       - node8-latest
@@ -248,9 +250,9 @@ workflows:
           filters:
             tags:
               only: /.*/
-#endregion
+      #endregion
 
-#region RELEASE VERSION
+      #region RELEASE VERSION
       - draft:
           requires:
             # - smoke-stencil
