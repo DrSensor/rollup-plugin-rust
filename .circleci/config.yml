@@ -187,6 +187,7 @@ jobs:
 #endregion
 
 workflows:
+  version: 2
   build and publish on tagging:
     jobs:
       #region PREPARATION
