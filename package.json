@@ -79,7 +79,7 @@
 		"standard-version": "^4.4.0"
 	},
 	"lint-staged": {
-		"*.js": ["pretty-quick --staged", "flow focus-check", "eslint"]
+		"*.js": ["flow focus-check", "eslint"]
 	},
 	"standard-version": {
 		"scripts": {

@@ -1,6 +1,6 @@
 // @flow
 import { createFilter } from 'rollup-pluginutils';
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import {
   cargoCommand,
   findSrcDir,
@@ -10,7 +10,18 @@ import { rollPack, execPermissive } from './util';
 import wrap from './wrapper';
 import predef from './options';
 
+//#region helper
 const extension = /\.rs$/; // rust file extension
+const folder = (path: string) => {
+  const list = readdirSync(path);
+  return {
+    has: (file: string) => ({
+      butNot: (exceptFile: string) =>
+        list.includes(file) && !list.includes(exceptFile)
+    })
+  };
+};
+//#endregion
 
 export default function(options: $Shape<Options> = {}) {
   options = (Object.assign(predef, options): Options); // diff and merge with predefined options
@@ -19,17 +30,25 @@ export default function(options: $Shape<Options> = {}) {
 
   return {
     name: 'rust',
+
     options(opts: any) {
-      let external: string[] | ((id: string) => boolean);
+      if (
+        folder(process.cwd())
+          .has('rollup.config.js')
+          .butNot('stencil.config.ts')
+      ) {
+        let external: string[] | ((id: string) => boolean);
 
-      if (typeof opts.external === 'function')
-        external = id => opts.external(id) || id.includes('buffer');
+        if (typeof opts.external === 'function')
+          external = id => opts.external(id) || id.includes('buffer');
 
-      if (Array.isArray(opts.external))
-        external = Array.from(new Set(opts.external.concat('buffer')));
+        if (Array.isArray(opts.external))
+          external = Array.from(new Set(opts.external.concat('buffer')));
 
-      return Object.assign({}, opts, { external });
+        return Object.assign({}, opts, { external });
+      } else return null;
     },
+
     async transform(code: string, id: string) {
       if (!extension.test(id)) return;
       if (!filter(id)) return;

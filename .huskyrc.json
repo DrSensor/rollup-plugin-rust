@@ -1,6 +1,6 @@
 {
 	"hooks": {
-		"pre-commit": "lint-staged",
+		"pre-commit": "pretty-quick --staged && lint-staged",
 		"commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
 		"post-commit": "git update-index --again"
 	}

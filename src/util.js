@@ -17,6 +17,7 @@ export async function execPermissive(cmd: string, cwd: string) {
     return error;
   }
 }
+
 /** Transform rollup plugin context into webpack specific context
  * @param self rollup plugin context
  * @see https://github.com/rollup/rollup/wiki/Plugins#plugin-context
