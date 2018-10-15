@@ -237,12 +237,12 @@ workflows:
       #endregion
 
       #region TEST BY EXAMPLES
-      # - smoke-stencil:
-      #     requires:
-      #       - node8-latest
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - smoke-stencil:
+          requires:
+            - node8-latest
+          filters:
+            tags:
+              only: /.*/
       - smoke-node-wasm:
           requires:
             - node8-latest
