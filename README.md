@@ -14,12 +14,15 @@
 [![deps][deps]][deps-url]
 [![tests][tests]][tests-url]
 [![cover][cover]][cover-url]
-[![stencil][stencil]][stencil-url]
+
+<!-- [![stencil][stencil]][stencil-url] -->
 
 # rollup-plugin-rust
+
 <sup><sup>tl;dr -- see [examples](#examples)</sup></sup>
 
 This is a rollup plugin that loads Rust code so it can be interop with Javascript base project. Currently, the Rust code will be compiled as:
+
 - [x] WebAssembly module/instance
 - [ ] Node.js addon/ffi
 
@@ -38,23 +41,27 @@ npm install rollup-plugin-rust --save-dev
 Then add the plugin to your `rollup` config. For example:
 
 <b>rollup.config.js</b>
-```js
-import rust from "rollup-plugin-rust"
 
-export default [{
+```js
+import rust from "rollup-plugin-rust";
+
+export default [
+  {
     input: "src/main.js",
     output: {
-        file: "dist.index.js",
-        format: "esm"
+      file: "dist.index.js",
+      format: "esm"
     },
     plugins: [rust()]
-}]
+  }
+];
 ```
 
 <details>
 <summary>quick usage</summary>
 
 <b>lib.rs</b>
+
 ```rust
 #[no_mangle]
 pub fn add(a: i32, b: i32) -> i32 {
@@ -63,14 +70,16 @@ pub fn add(a: i32, b: i32) -> i32 {
 ```
 
 <b>index.js</b>
+
 ```js
-import wasm from 'lib.rs';
+import wasm from "lib.rs";
 
 export async function increment(a) {
-    const { instance } = await wasm;
-    return instance.exports.add(1, a);
+  const { instance } = await wasm;
+  return instance.exports.add(1, a);
 }
 ```
+
 </details>
 
 And run `rollup` via your preferred method.
@@ -86,18 +95,19 @@ And run `rollup` via your preferred method.
   - `buffer` will export wasm code as [Buffer][]
   - `module` will export wasm code as [WebAssembly.Module][]
   - `instance` will export wasm code as [WebAssembly.Instance][]
-  - `async` will [instantiate][WebAssembly.instantiate] wasm code asynchronously, return promise of both [WebAssembly.Module][] and [WebAssembly.Instance][]
-  - `async-module` will [compile][WebAssembly.compile] wasm code asynchronously, return promise of [WebAssembly.Module][]
-  - `async-instance` will [instantiate][WebAssembly.instantiate] wasm code asynchronously, return promise of [WebAssembly.Instance][]
+  - `async` will [instantiate][webassembly.instantiate] wasm code asynchronously, return promise of both [WebAssembly.Module][] and [WebAssembly.Instance][]
+  - `async-module` will [compile][webassembly.compile] wasm code asynchronously, return promise of [WebAssembly.Module][]
+  - `async-instance` will [instantiate][webassembly.instantiate] wasm code asynchronously, return promise of [WebAssembly.Instance][]
 
 How wasm code would be exported. (see [examples](#examples))
 
 ```js
 // in your rollup.config.js
 {
-  plugins: [rust({export: 'instance'})]
+  plugins: [rust({ export: "instance" })];
 }
 ```
+
 </details>
 
 <details>
@@ -112,9 +122,10 @@ The Rust target to use. Currently it **only support [wasm related target](https:
 ```js
 // in your rollup.config.js
 {
-  plugins: [rust({target: 'wasm32-unknown-emscripten'})]
+  plugins: [rust({ target: "wasm32-unknown-emscripten" })];
 }
 ```
+
 </details>
 
 <details>
@@ -128,15 +139,16 @@ Whether to compile the Rust code in debug or release mode.
 ```js
 // in your rollup.config.js
 {
-  plugins:[rust({release: false})] // preserve debug symbol
+  plugins: [rust({ release: false })]; // preserve debug symbol
 }
 ```
+
 </details>
 
 <details>
 <summary><b><code>include</code></b></summary>
 
-- Type: `Array<string>` or `string`  
+- Type: `Array<string>` or `string`
 - Default: `['**/*.rs']`
 
 A single file, or array of files, to include when compiling.
@@ -144,20 +156,20 @@ A single file, or array of files, to include when compiling.
 ```js
 // in your rollup.config.js
 {
-  plugins:[rust({
-    include: [
-      'src/**/*.rs',
-      'test/**/*.rs',
-    ]
-  })]
+  plugins: [
+    rust({
+      include: ["src/**/*.rs", "test/**/*.rs"]
+    })
+  ];
 }
 ```
+
 </details>
 
 <details>
 <summary><b><code>exclude</code></b></summary>
 
-- Type: `Array<string>` or `string`  
+- Type: `Array<string>` or `string`
 - Default: `['node_modules/**', 'target/**']`
 
 A single file, or array of files, to exclude when linting.
@@ -165,15 +177,14 @@ A single file, or array of files, to exclude when linting.
 ```js
 // in your rollup.config.js
 {
-  plugins:[rust({
-    exclude: [
-      '**/node_modules/**',
-      '**/target/**',
-      '**/__caches__/**'
-    ]
-  })]
+  plugins: [
+    rust({
+      exclude: ["**/node_modules/**", "**/target/**", "**/__caches__/**"]
+    })
+  ];
 }
 ```
+
 </details>
 
 ## Examples
@@ -186,6 +197,7 @@ See the test cases and example projects in [fixtures](./test/fixtures) and [exam
 ### Given this Rust code
 
 <b>lib.rs</b>
+
 ```rust
 #[no_mangle]
 pub fn add(a: i32, b: i32) -> i32 {
@@ -194,6 +206,7 @@ pub fn add(a: i32, b: i32) -> i32 {
 ```
 
 <b>Cargo.toml</b>
+
 ```toml
 [package]
 name = "adder"
@@ -208,31 +221,41 @@ path = "lib.rs"
 ### With options
 
 #### `{export: 'buffer'}`
+
 ```js
-import wasmCode from './lib.rs'
+import wasmCode from "./lib.rs";
 
 WebAssembly.compile(wasmCode).then(module => {
   const instance = new WebAssembly.Instance(module);
   console(instance.exports.add(1, 2)); // 3
-})
+});
 ```
+
 ---
+
 #### `{export: 'module'}`
+
 ```js
-import wasmModule from './lib.rs'
+import wasmModule from "./lib.rs";
 
 const instance = new WebAssembly.Instance(wasmModule);
 console(instance.exports.add(1, 2)); // 3
 ```
+
 ---
+
 #### `{export: 'instance'}`
+
 ```js
-import wasm from './lib.rs'
+import wasm from "./lib.rs";
 
 console(wasm.exports.add(1, 2)); // 3
 ```
+
 ---
+
 #### `{export: 'async'}`
+
 ```rust
 extern {
     fn hook(c: i32);
@@ -245,7 +268,7 @@ pub fn add(a: i32, b: i32) -> i32 {
 ```
 
 ```js
-import wasmInstantiate from './lib.rs'
+import wasmInstantiate from "./lib.rs";
 
 wasmInstantiate(importObject | undefined).then(({ instance, module }) => {
   console(instance.exports.add(1, 2)); // 3
@@ -257,71 +280,77 @@ wasmInstantiate(importObject | undefined).then(({ instance, module }) => {
     }
   });
   console(differentInstance.exports.add(1, 2)); // 6
-})
+});
 ```
+
 ---
+
 #### `{export: 'async-instance'}`
+
 ```js
-import wasmInstantiate from './lib.rs'
+import wasmInstantiate from "./lib.rs";
 
 wasmInstantiate(importObject | undefined).then(instance => {
   console(instance.exports.add(1, 2)); // 3
-})
+});
 ```
+
 ---
+
 #### `{export: 'async-module'}`
+
 ```js
-import wasmInstantiate from './lib.rs'
+import wasmInstantiate from "./lib.rs";
 
 wasmCompile(importObject | undefined).then(module => {
   const differentInstance = new WebAssembly.Instance(module);
   console(differentInstance.exports.add(1, 2)); // 3
-})
+});
 ```
+
 ---
+
 </details>
 
 ## Who use this?
+
 - [example-stencil-rust](https://github.com/DrSensor/example-stencil-rust)
 - [add yours 😉]
 
 ## Contributing
+
 - [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for how you can make contribution
 - [HACKING.md](./.github/HACKING.md) for technical details
 
 ## Credits
+
 - [rust-native-wasm-loader](https://github.com/dflemstr/rust-native-wasm-loader)
 - [webpack-defaults](https://github.com/webpack-contrib/webpack-defaults)
 
 ---
+
 ## License
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDrSensor%2Frollup-plugin-rust.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDrSensor%2Frollup-plugin-rust?ref=badge_large)
 
 [nightly channel]: https://rustwasm.github.io/book/game-of-life/setup.html#the-wasm32-unknown-unknown-target
-[Buffer]: https://nodejs.org/api/buffer.html
-[WebAssembly.Module]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module
-[WebAssembly.Instance]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance
-[WebAssembly.instantiate]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
-[WebAssembly.compile]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile
-
+[buffer]: https://nodejs.org/api/buffer.html
+[webassembly.module]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module
+[webassembly.instance]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance
+[webassembly.instantiate]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
+[webassembly.compile]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile
 [npm]: https://img.shields.io/npm/v/rollup-plugin-rust.svg
 [npm-url]: https://npmjs.com/package/rollup-plugin-rust
 [npm-download]: https://img.shields.io/npm/dm/rollup-plugin-rust.svg
-
 [node]: https://img.shields.io/node/v/rollup-plugin-rust.svg
 [node-url]: https://nodejs.org
-
 [deps]: https://david-dm.org/DrSensor/rollup-plugin-rust.svg
 [deps-url]: https://david-dm.org/DrSensor/rollup-plugin-rust
-
 [tests]: https://img.shields.io/circleci/project/github/DrSensor/rollup-plugin-rust.svg
 [tests-url]: https://circleci.com/gh/DrSensor/rollup-plugin-rust
-
 [stencil]: https://img.shields.io/travis/DrSensor/rollup-plugin-rust.svg?label=smoke%20stencil
 [stencil-url]: https://travis-ci.org/DrSensor/rollup-plugin-rust
-
 [cover]: https://codecov.io/gh/DrSensor/rollup-plugin-rust/branch/master/graph/badge.svg
 [cover-url]: https://codecov.io/gh/DrSensor/rollup-plugin-rust
-
 [size]: https://packagephobia.now.sh/badge?p=rollup-plugin-rust
 [size-url]: https://packagephobia.now.sh/result?p=rollup-plugin-rust
