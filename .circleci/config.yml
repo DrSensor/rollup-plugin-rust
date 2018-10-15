@@ -12,8 +12,6 @@ rustup_nightly: &rustup_nightly
 smoke_tests: &smoke_tests
   steps:
     - checkout
-    - run: git submodule sync
-    - run: git submodule update --init
     - restore_cache:
         key: dependency-cache-{{ checksum "package-lock.json" }}
     - <<: *rustup_nightly
@@ -26,12 +24,12 @@ smoke_tests: &smoke_tests
     - run:
         name: NPM Rebuild smoke-test
         command: |
-          cd examples/${GIT_SUBMODULE}
+          cd examples/${EXAMPLE_PROJECT}
           npm install
     - run:
         name: Run smoke tests
         command: |
-          cd examples/${GIT_SUBMODULE}
+          cd examples/${EXAMPLE_PROJECT}
           npm run build
 
 unit_tests: &unit_tests
@@ -141,13 +139,13 @@ jobs:
     docker:
       - image: circleci/node:8
     environment:
-      - GIT_SUBMODULE: stencil
+      - EXAMPLE_PROJECT: stencil
     <<: *smoke_tests
   smoke-node-wasm:
     docker:
       - image: circleci/node:8
     environment:
-      - GIT_SUBMODULE: node_wasm
+      - EXAMPLE_PROJECT: node_wasm
     <<: *smoke_tests
   #endregion
 
@@ -239,12 +237,12 @@ workflows:
       #endregion
 
       #region TEST BY EXAMPLES
-      # - smoke-stencil:
-      #     requires:
-      #       - node8-latest
-      #     filters:
-      #       tags:
-      #         only: /.*/
+      - smoke-stencil:
+          requires:
+            - node8-latest
+          filters:
+            tags:
+              only: /.*/
       - smoke-node-wasm:
           requires:
             - node8-latest

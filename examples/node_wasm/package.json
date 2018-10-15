@@ -1,0 +1,28 @@
+{
+	"name": "example-node-wasm",
+	"version": "0.0.0",
+	"description": "Just an example for incorporating rollup-plugin-wasm in Nodejs project",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "rollup -c",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DrSensor/example-node-rust-wasm.git"
+	},
+	"keywords": ["example", "webassembly", "rollup", "rust"],
+	"author": "Fahmi Akbar Wildana",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/DrSensor/example-node-rust-wasm/issues"
+	},
+	"homepage": "https://github.com/DrSensor/example-node-rust-wasm#readme",
+	"devDependencies": {
+		"rollup": "^0.66.6",
+		"rollup-plugin-rust": "file:../.."
+	},
+	"dependencies": {
+		"buffer-es6": "^4.9.3"
+	}
+}

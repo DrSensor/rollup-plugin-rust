@@ -1,0 +1,48 @@
+{
+	"name": "my-component",
+	"version": "0.0.1",
+	"description": "Stencil Component Starter",
+	"module": "dist/esm/index.js",
+	"main": "dist/index.js",
+	"types": "dist/types/components.d.ts",
+	"collection": "dist/collection/collection-manifest.json",
+	"files": ["dist/"],
+	"scripts": {
+		"build": "stencil build",
+		"start": "stencil build --dev --watch --serve",
+		"test": "jest",
+		"test.watch": "jest --watch"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@stencil/core": "^0.12.4",
+		"@types/jest": "^23.3.1",
+		"jest": "^23.5.0",
+		"rollup": "^0.65.0",
+		"rollup-plugin-rust": "file:../..",
+		"rs-jest": "^1.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ionic-team/stencil-component-starter.git"
+	},
+	"author": "Ionic Team",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ionic-team/stencil"
+	},
+	"homepage": "https://github.com/ionic-team/stencil",
+	"jest": {
+		"globals": {
+			"rs-jest": {
+				"export": "instance"
+			}
+		},
+		"transform": {
+			"^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js",
+			"^.+\\.rs$": "rs-jest"
+		},
+		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
+		"moduleFileExtensions": ["ts", "tsx", "js", "json", "jsx"]
+	}
+}
