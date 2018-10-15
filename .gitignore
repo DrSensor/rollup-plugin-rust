@@ -1,5 +1,13 @@
 .NOTE.md
 
+# Smoke Test
+examples/**/*-lock.*
+examples/**/*.lock
+examples/**/node_modules
+examples/**/.stencil
+examples/**/www
+examples/**/target
+
 # Rust
 *.lock
 **/target/
