@@ -1,4 +1,3 @@
-#[link(wasm_import_module = "hook")]
 extern {
     fn before(a: u8, b: u8);
     fn after(c: u8);
