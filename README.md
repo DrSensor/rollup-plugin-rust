@@ -8,7 +8,6 @@
 </div>
 
 [![npm][npm]][npm-url]
-[![node][node]][node-url]
 [![size][size]][size-url]
 [![npm][npm-download]][npm-url]
 [![deps][deps]][deps-url]
@@ -27,6 +26,20 @@ This is a rollup plugin that loads Rust code so it can be interop with Javascrip
 - [ ] Node.js addon/ffi
 
 ## Requirements
+
+<ul>
+<li>Node v8 or later</li>
+<li>Rollup v0.64 or later</li>
+<li><details>
+<summary>Rust v1.28.0 with wasm32-uknown-unknown installed</summary>
+
+```console
+rustup default 1.28.0
+rustup target add wasm32-unknown-unknown
+```
+
+</details></li>
+</ul>
 
 This module requires a minimum of Node v8.9.0, Rollup v0.64.0, and Rust in [nightly channel][].
 
@@ -89,17 +102,7 @@ And run `rollup` via your preferred method.
 <details>
 <summary><b><code>export</code></b></summary>
 
-- Type: `string`
-- Default: `promise`
-- Expected value:
-  - `buffer` will export wasm code as [Buffer][]
-  - `module` will export wasm code as [WebAssembly.Module][]
-  - `instance` will export wasm code as [WebAssembly.Instance][]
-  - `async` will [instantiate][webassembly.instantiate] wasm code asynchronously, return promise of both [WebAssembly.Module][] and [WebAssembly.Instance][]
-  - `async-module` will [compile][webassembly.compile] wasm code asynchronously, return promise of [WebAssembly.Module][]
-  - `async-instance` will [instantiate][webassembly.instantiate] wasm code asynchronously, return promise of [WebAssembly.Instance][]
-
-How wasm code would be exported. (see [examples](#examples))
+How wasm code would be exported. This options is identical with [option `export` in webassembly-loader][webassembly-loader]. (see [examples](#examples))
 
 ```js
 // in your rollup.config.js
@@ -333,17 +336,10 @@ wasmCompile(importObject | undefined).then(module => {
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDrSensor%2Frollup-plugin-rust.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDrSensor%2Frollup-plugin-rust?ref=badge_large)
 
-[nightly channel]: https://rustwasm.github.io/book/game-of-life/setup.html#the-wasm32-unknown-unknown-target
-[buffer]: https://nodejs.org/api/buffer.html
-[webassembly.module]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module
-[webassembly.instance]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Instance
-[webassembly.instantiate]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate
-[webassembly.compile]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/compile
+[webassembly-loader]: https://github.com/DrSensor/webassembly-loader#export
 [npm]: https://img.shields.io/npm/v/rollup-plugin-rust.svg
 [npm-url]: https://npmjs.com/package/rollup-plugin-rust
 [npm-download]: https://img.shields.io/npm/dm/rollup-plugin-rust.svg
-[node]: https://img.shields.io/node/v/rollup-plugin-rust.svg
-[node-url]: https://nodejs.org
 [deps]: https://david-dm.org/DrSensor/rollup-plugin-rust.svg
 [deps-url]: https://david-dm.org/DrSensor/rollup-plugin-rust
 [tests]: https://img.shields.io/circleci/project/github/DrSensor/rollup-plugin-rust.svg

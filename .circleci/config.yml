@@ -5,9 +5,9 @@ rustup_nightly: &rustup_nightly
     name: Install Cargo and Rust compiler
     command: |
       echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> $BASH_ENV
-      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.28.0
       source $BASH_ENV
-      rustup target add wasm32-unknown-unknown --toolchain nightly
+      rustup target add wasm32-unknown-unknown
 
 smoke_tests: &smoke_tests
   steps:

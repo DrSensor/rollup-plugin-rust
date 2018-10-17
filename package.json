@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"typings": "index.d.ts",
 	"scripts": {
-		"build": "flow && rollup -c",
+		"build": "rollup -c",
 		"dev": "flow && rollup -c -w || true",
 		"lint": "flow && eslint --cache src test flow-typed/*.js || true",
 		"lint:fix": "eslint --fix src test flow-typed/*.js",
@@ -76,7 +76,8 @@
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-prettier": "^0.4.0",
 		"rust-native-wasm-loader": "^0.8.1",
-		"standard-version": "^4.4.0"
+		"standard-version": "^4.4.0",
+		"webassembly-loader": "^1.1.0"
 	},
 	"lint-staged": {
 		"*.js": ["flow focus-check", "eslint"]

@@ -16,7 +16,7 @@ describe('test export option for importjs', () => {
 
     // Usage
     const importObj = {
-      hook: {
+      env: {
         before: jest.fn(),
         after: jest.fn()
       }
@@ -29,8 +29,8 @@ describe('test export option for importjs', () => {
     expect(instance).toBeInstanceOf(WebAssembly.Instance);
     // $FlowFixMe: false alarm
     expect(add(1, 2)).toBe(3);
-    expect(importObj.hook.before).toHaveBeenCalledWith(1, 2);
-    expect(importObj.hook.after).toHaveBeenCalledWith(3);
+    expect(importObj.env.before).toHaveBeenCalledWith(1, 2);
+    expect(importObj.env.after).toHaveBeenCalledWith(3);
   });
 
   test('export of WebAssembly.instantiate(WebAssembly.Module)', async () => {
@@ -43,7 +43,7 @@ describe('test export option for importjs', () => {
 
     // Usage
     const importObj = {
-      hook: {
+      env: {
         before: jest.fn(),
         after: jest.fn()
       }
@@ -53,8 +53,8 @@ describe('test export option for importjs', () => {
 
     expect(instance).toBeInstanceOf(WebAssembly.Instance);
     expect(add(1, 2)).toBe(3);
-    expect(importObj.hook.before).toHaveBeenCalledWith(1, 2);
-    expect(importObj.hook.after).toHaveBeenCalledWith(3);
+    expect(importObj.env.before).toHaveBeenCalledWith(1, 2);
+    expect(importObj.env.after).toHaveBeenCalledWith(3);
   });
 
   test('export of WebAssembly.instantiate(Buffer)', async () => {
@@ -67,7 +67,7 @@ describe('test export option for importjs', () => {
 
     // Usage
     const importObj = {
-      hook: {
+      env: {
         before: jest.fn(),
         after: jest.fn()
       }
@@ -78,7 +78,7 @@ describe('test export option for importjs', () => {
     expect(module).toBeInstanceOf(WebAssembly.Module);
     expect(instance).toBeInstanceOf(WebAssembly.Instance);
     expect(add(1, 2)).toBe(3);
-    expect(importObj.hook.before).toHaveBeenCalledWith(1, 2);
-    expect(importObj.hook.after).toHaveBeenCalledWith(3);
+    expect(importObj.env.before).toHaveBeenCalledWith(1, 2);
+    expect(importObj.env.after).toHaveBeenCalledWith(3);
   });
 });
