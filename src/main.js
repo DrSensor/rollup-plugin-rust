@@ -7,7 +7,7 @@ import {
   handleCargo
 } from 'rust-native-wasm-loader/dist/cargo';
 import { rollPack, execPermissive } from './util';
-import wrap from './wrapper';
+import wasm2js from 'webassembly-loader';
 import predef from './options';
 
 //#region helper
@@ -60,22 +60,13 @@ export default function(options: $Shape<Options> = {}) {
       if (options.target.includes('wasm')) {
         let { wasmFile } = await handleCargo(rollPack(this).toLoader, result);
         if (!wasmFile) this.error('No wasm file produced as build output');
-        const wasmCode = readFileSync(wasmFile);
 
-        switch (options.export) {
-          case 'buffer':
-            return wrap(wasmCode).asBuffer;
-          case 'instance':
-            return wrap(wasmCode).asWebAssembly.Instance;
-          case 'module':
-            return wrap(wasmCode).asWebAssembly.Module;
-          case 'async':
-            return wrap(wasmCode).promiseWebAssembly.Both;
-          case 'async-instance':
-            return wrap(wasmCode).promiseWebAssembly.Instance;
-          case 'async-module':
-            return wrap(wasmCode).promiseWebAssembly.Module;
-        }
+        const wasmCode = readFileSync(wasmFile);
+        return wasm2js(wasmCode, {
+          export: options.export,
+          module: 'esm',
+          errorHanlder: errMsg => this.error(errMsg)
+        });
       } else
         this.error(`only support wasm related target compile
         for more info see https://kripken.github.io/blog/binaryen/2018/04/18/rust-emscripten.html

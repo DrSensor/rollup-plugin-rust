@@ -37,9 +37,9 @@ export default [
 		experimentalCodeSplitting: true,
 		plugins: [
 			eslint(),
-			resolve(),
 			babel(),
 			commonjs(),
+			resolve(),
 			autoExternal(),
 			prettier(prettierrc.files("*.js"))
 		]
