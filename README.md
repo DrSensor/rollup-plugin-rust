@@ -315,6 +315,10 @@ wasmCompile(importObject | undefined).then(module => {
 
 </details>
 
+## You may also want to look at
+
+- [rs-jest](https://github.com/DrSensor/rs-jest)
+
 ## Who use this?
 
 - [example-stencil-rust](https://github.com/DrSensor/example-stencil-rust)
@@ -327,8 +331,10 @@ wasmCompile(importObject | undefined).then(module => {
 
 ## Credits
 
+- [webassembly-loader](https://github.com/DrSensor/webassembly-loader)
 - [rust-native-wasm-loader](https://github.com/dflemstr/rust-native-wasm-loader)
 - [webpack-defaults](https://github.com/webpack-contrib/webpack-defaults)
+- [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter)
 
 ---
 
