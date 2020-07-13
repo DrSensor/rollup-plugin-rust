@@ -76,7 +76,7 @@
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-prettier": "^0.4.0",
 		"rust-native-wasm-loader": "^0.8.1",
-		"standard-version": "^4.4.0",
+		"standard-version": "^8.0.1",
 		"webassembly-loader": "^1.1.0"
 	},
 	"lint-staged": {
